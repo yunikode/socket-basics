@@ -7,3 +7,16 @@ socket.on('connect', function () {
 socket.on('msg', function (message) {
   console.log('New Message: ' + message.text)
 })
+
+// submit new messages
+
+var $form = $('#message-form')
+var $message = $form.find('input[name=message]')
+
+$form.on('submit', function (event) {
+  event.preventDefault()
+  socket.emit('msg', {
+    text: $message.val()
+  })
+  $message.val('')
+})
