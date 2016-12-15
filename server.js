@@ -8,8 +8,17 @@ const io = require('socket.io')(http)
 
 app.use(express.static(path.join(__dirname, '/public')))
 
-io.on('connection', () => {
+io.on('connection', socket => {
   console.log('user connected via socket.io')
+
+  socket.on('msg', function (message) {
+    console.log('Message received: ' + message.text)
+    socket.broadcast.emit('msg', message)
+  })
+
+  socket.emit('msg', {
+    text: 'Welcome to the chat app'
+  })
 })
 
 http.listen(PORT, () => {
