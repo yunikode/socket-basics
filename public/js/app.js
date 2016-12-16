@@ -5,7 +5,8 @@ socket.on('connect', function () {
 })
 
 socket.on('msg', function (message) {
-  console.log('New Message: ' + message.text)
+  // console.log('New Message: ' + message.text)
+  $('.messages').append('<p>' + message.text + '</p>')
 })
 
 // submit new messages
