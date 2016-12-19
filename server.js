@@ -11,6 +11,29 @@ app.use(express.static(path.join(__dirname, '/public')))
 
 var clientInfo = {}
 
+function sendCurrentUsers (socket) {
+  var info = clientInfo[socket.id]
+  let users = []
+
+  if (typeof info === 'undefined') {
+    return
+  }
+
+  Object.keys(clientInfo).forEach(socketId => {
+    let userInfo = clientInfo[socketId]
+
+    if (info.room === userInfo.room) {
+      users.push(userInfo.name)
+    }
+  })
+
+  socket.emit('msg', {
+    name: 'System',
+    text: 'Current users: ' + users.join(', '),
+    timeStamp: moment().valueOf()
+  })
+}
+
 io.on('connection', socket => {
   console.log('user connected via socket.io')
 
@@ -39,7 +62,12 @@ io.on('connection', socket => {
   socket.on('msg', function (message) {
     message.timeStamp = moment().valueOf()
     console.log(message.timeStamp + ' : ' + message.name + ' - ' + message.text)
-    io.to(clientInfo[socket.id].room).emit('msg', message)
+
+    if (message.text === '@currentUsers') {
+      sendCurrentUsers(socket)
+    } else {
+      io.to(clientInfo[socket.id].room).emit('msg', message)
+    }
   })
 
   socket.emit('msg', {
