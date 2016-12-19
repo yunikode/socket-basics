@@ -1,4 +1,6 @@
-# socket.io basics
+# SSCS - super simple chat server
+
+a simple chat server based on [socket.io](http://socket.io/)
 
 on [Heroku](https://urban-carnival.herokuapp.com/)
 

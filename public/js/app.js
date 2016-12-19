@@ -1,10 +1,10 @@
-function getQueryParams(params) {
+function getQueryParams (params) {
   var query = window.location.search.substring(1)
   var vars = query.split('&')
   for (var i = 0; i < vars.length; i++) {
     var pair = vars[i].split('=')
     if (decodeURIComponent(pair[0]) == params) {
-      return decodeURIComponent(pair[1])
+      return decodeURIComponent(pair[1].replace(/\+/g, ' '))
     }
   }
 
@@ -12,13 +12,16 @@ function getQueryParams(params) {
 }
 
 var name = getQueryParams('name') || 'Anonymous'
-var room = getQueryParams('room')
+var room = getQueryParams('room') || 'General'
 var socket = io()
 
+$('#roomName').text(room)
+
 socket.on('connect', function () {
-  // socket.emit('msg', {
-  //   text: name + ' joined '+ room
-  // })
+  socket.emit('joinRoom', {
+    name: name,
+    room: room
+  })
 })
 
 socket.on('msg', function (message) {

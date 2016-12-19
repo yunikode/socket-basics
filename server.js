@@ -9,13 +9,27 @@ const io = require('socket.io')(http)
 
 app.use(express.static(path.join(__dirname, '/public')))
 
+var clientInfo = {
+
+}
+
 io.on('connection', socket => {
   console.log('user connected via socket.io')
+
+  socket.on('joinRoom', function (req) {
+    clientInfo[socket.id] = req
+    socket.join(req.room)
+    socket.broadcast.to(req.room).emit('msg', {
+      name: 'System',
+      text: req.name + ' has joined!',
+      timeStamp: moment().valueOf()
+    })
+  })
 
   socket.on('msg', function (message) {
     message.timeStamp = moment().valueOf()
     console.log(message.timeStamp + ' : ' + message.name + ' - ' + message.text)
-    io.emit('msg', message)
+    io.to(clientInfo[socket.id].room).emit('msg', message)
   })
 
   socket.emit('msg', {
