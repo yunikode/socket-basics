@@ -1,6 +1,7 @@
 const PORT = process.env.PORT || 3000
 const express = require('express')
 const path = require('path')
+const moment = require('moment')
 
 const app = express()
 const http = require('http').Server(app)
@@ -12,12 +13,15 @@ io.on('connection', socket => {
   console.log('user connected via socket.io')
 
   socket.on('msg', function (message) {
-    console.log('Message received: ' + message.text)
+    message.timeStamp = moment().valueOf()
+    console.log(message.timeStamp + ' : ' + message.name + ' - ' + message.text)
     io.emit('msg', message)
   })
 
   socket.emit('msg', {
-    text: 'Welcome to the chat app'
+    name: 'System',
+    text: 'Welcome to the chat app',
+    timeStamp: moment().valueOf()
   })
 })
 
