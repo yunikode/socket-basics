@@ -26,10 +26,12 @@ socket.on('connect', function () {
 
 socket.on('msg', function (message) {
   var $messages = $('.messages')
+  var $message = $('<li class="list-group-item"></li>')
   var time = moment.utc(message.timeStamp).local().format('h:mm a')
 
-  $messages.append('<p><strong>' + message.name + ' ' + time + '</strong></p>')
-  $messages.append('<p>' + message.text + '</p>')
+  $message.append('<p><strong>' + message.name + ' ' + time + '</strong></p>')
+  $message.append('<p>' + message.text + '</p>')
+  $messages.append($message)
 })
 
 // submit new messages

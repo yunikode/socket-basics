@@ -7,19 +7,55 @@
   <title>Hello Word!</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <style media="screen">
+    #roomName {
+      text-align: center;
+      margin: .8em 0;
+    }
+    .messages {
+      margin-bottom: 1em;
+    }
+    .messages p{
+      margin: 6px 0;
+    }
+    #topRow {
+      margin-top: 2em;
+      border: 2px solid white;
+      border-radius: 8px;
+      padding: 1em;
+    }
+  </style>
 </head>
 <body>
-  <a href="index.html">Change Settings</a>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10 col-md-8 offset-sm-1 offset-md-2 bg-faded"  id="topRow">
 
-  <h1 id="roomName"></h1>
+        <a href="index.html">Change Settings</a>
 
-  <div class="messages">
-    <!-- Messages -->
+        <h1 id="roomName"></h1>
+
+        <ul class="messages list-group">
+          <!-- Messages -->
+        </ul>
+
+        <form id="message-form">
+          <div class="form-group">
+            <div class="input-group">
+              <span class='input-group-addon'>
+                <i class="fa fa-comment"></i>
+              </span>
+              <input type="text" name="message" placeholder="Whats new?"class="form-control"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="submit" class='btn btn-default btn-block'/>
+          </div>
+        </form>
+
+      </div>
+    </div>
   </div>
-  <form id="message-form">
-    <input type="text" name="message" placeholder="Whats new?"/>
-    <input type="submit"/>
-  </form>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"
 			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
